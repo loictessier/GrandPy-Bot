@@ -9,6 +9,7 @@ pytest = "*"
 flask-testing = "*"
 nltk = "*"
 requests = "*"
+fuzzywuzzy = "*"
 
 [dev-packages]
 

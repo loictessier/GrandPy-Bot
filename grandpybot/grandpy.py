@@ -1,6 +1,11 @@
 from grandpybot.utils.parser import Parser
 from grandpybot.utils.apis import search_address, search_mediawiki
 
+from fuzzywuzzy import fuzz
+
+
+INTERROGATION_TERMS = ["que", "où", "comment", "à", "quel", "quelle", "demander", "demandais"]
+
 
 class Grandpy:
 
@@ -21,14 +26,28 @@ class Grandpy:
 
     def _search_question(self, raw_text):
         # use parser to get sentences from raw_text
+        sentences = Parser.raw_to_sentences(raw_text)
         # extract the question from the sentence
-        pass
+        for s in sentences:
+            if self._is_question(s):
+                return s
+        return None
+
+    def _is_question(sentence):
+        # check for interrogative terms
+        for word in sentence.split():
+            if any(fuzz.ratio(word, term) >= 90 for term in INTERROGATION_TERMS):
+                return True
+        return False
 
     def _get_extract(self, address):
         # extract road name from address
+        road = filter(lambda x: x.isalpha(), adress.split(',')[0])
+        road_name = ''.join([i for i in road if not i.isdigit()]).strip()
         # call search_mediawiki on the road name to get text
+        extract = search_mediawiki(road_name)
         # returns formatted text as a message from grandpy
-        pass
+        return extract
 
     def _format_grandpy_answer(self, address, extract):
         # returns grandpy answer as json object 
