@@ -1,2 +1,3 @@
 *.code-workspace
 *.pytest_cache
+constants.py
