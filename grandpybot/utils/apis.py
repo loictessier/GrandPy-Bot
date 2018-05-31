@@ -1,6 +1,6 @@
 import requests
 
-from grandpybot.constants import GOOGLE_SEARCH_URL, GOOGLE_API_KEY, WIKI_SEARCH_URL
+from constants import GOOGLE_SEARCH_URL, GOOGLE_API_KEY, WIKI_SEARCH_URL
 
 
 def search_address(*address_keywords):
@@ -15,9 +15,9 @@ def search_address(*address_keywords):
     if response.ok:
         response.encoding = 'UTF-8'
         data = response.json()
-        return data["results"][0]["formatted_address"]
-    else:
-        return None
+        if len(data["results"]) >= 1 :
+            return data["results"][0]["formatted_address"]
+    return None
 
 
 def search_mediawiki(location):
