@@ -21,15 +21,14 @@ class Grandpy:
             Grandpy try to answer the user by looking for the question terms
             then finding the address corresponding and informations about it
         """
+        countries = ["France"]
         address = None
         extract = None
         question = self._search_question(user_raw_text)
         keywords = self.parser.get_keywords(question)
-        # TODO look for an address if None, try with less words or country
-        address = search_address(keywords)
+        address = self._get_address(keywords, countries)
         if address is not None:
             extract = self._get_extract(address)
-            print(extract)
         return self._format_grandpy_answer(address, extract)
 
     def _search_question(self, raw_text):
@@ -57,10 +56,12 @@ class Grandpy:
             Try to get informations (extract) about the road name of the
             address passed as parameter and return it
         """
-        road = filter(lambda x: x.isalpha(), adress.split(',')[0])
-        road_name = ''.join([i for i in road if not i.isdigit()]).strip()
-        extract = search_mediawiki(road_name)
-        return extract
+        road = (address.split(',')[0]).split(' ')
+        road_name = ' '.join([i for i in road if not i.isdigit()]).strip()
+        media_wiki_result = search_mediawiki(road_name)
+        if media_wiki_result != None:
+            return search_mediawiki(road_name).split("\n")[-1].strip()
+        return None
 
     def _format_grandpy_answer(self, address, extract):
         """
@@ -72,13 +73,21 @@ class Grandpy:
         answer['extract'] = extract
         return json.dumps(answer)
 
-    def _get_address(self, keywords, country="France"):
-        # address = search_address(keywords)
-        # address == None:
-        pass
-            
+    def _get_address(self, keywords, countries):
+        address = self._search_try(keywords[:])
+        if address != None:
+            return address
+        for country in countries:
+            keywords.append(country)
+            address = self._search_try(keywords[:])
+            if address != None:
+                return address
+        return address
 
-
-if __name__ == "__main__":
-    my_gp = Grandpy()
-    my_gp.grandpy_answer("Salut GrandPy ! Par hasard, est-ce que tu connais l'adresse d'OpenClassrooms ?")
+    def _search_try(self, keywords):
+        while True:
+            address = search_address(keywords)
+            if address != None or len(keywords) < 1:
+                return address
+            else:
+                keywords.pop(0)

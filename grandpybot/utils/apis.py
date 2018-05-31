@@ -36,7 +36,10 @@ def search_mediawiki(location):
     if response.ok:
         response.encoding = "UTF-8"
         data = response.json()
-        wiki_page_id = str(data["query"]["search"][0]["pageid"])
+        if len(data["query"]["search"]) >= 1 :
+            wiki_page_id = str(data["query"]["search"][0]["pageid"])
+        else:
+            return
     else:
         return None
 
