@@ -8,11 +8,10 @@ class TestApis:
         self.location = "Cité Paradis"
 
     def test_search_address(self):
-        # mock avec monkeypatch le test de l'api
+        # TODO Mock for api calls
         assert search_address(self.address_keywords) is not None
 
     def test_search_mediawiki(self):
-        # mock avec monkeypatch le test de l'api
+        # TODO Mock for api calls
         assert search_mediawiki(self.location) is not None
 
-# mocker soir requests.get() soit ma propre fonction qui retourne la reponse de l'API

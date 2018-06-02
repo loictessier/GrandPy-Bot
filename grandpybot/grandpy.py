@@ -1,5 +1,5 @@
-from utils.parser import Parser
-from utils.apis import search_address, search_mediawiki
+from .utils.parser import Parser
+from .utils.apis import search_address, search_mediawiki
 
 from fuzzywuzzy import fuzz
 import json
@@ -24,11 +24,16 @@ class Grandpy:
         countries = ["France"]
         address = None
         extract = None
+        # Seek a question out of the user input
         question = self._search_question(user_raw_text)
+        # Extract keywords from the question
         keywords = self.parser.get_keywords(question)
+        # Search for an address based on the keywords
         address = self._get_address(keywords, countries)
+        # If an address was found, search for informations about the location
         if address is not None:
             extract = self._get_extract(address)
+        # return all informations found as a json object
         return self._format_grandpy_answer(address, extract)
 
     def _search_question(self, raw_text):

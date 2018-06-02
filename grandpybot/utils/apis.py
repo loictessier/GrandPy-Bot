@@ -1,6 +1,6 @@
 import requests
 
-from constants import GOOGLE_SEARCH_URL, GOOGLE_API_KEY, WIKI_SEARCH_URL
+from ..constants import GOOGLE_SEARCH_URL, GOOGLE_API_KEY, WIKI_SEARCH_URL
 
 
 def search_address(*address_keywords):
