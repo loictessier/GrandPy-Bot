@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>GrandPy-Bot</title>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     </head>
     <body>
         <header>
@@ -10,16 +11,17 @@
         </header>
         
         <section>
-            <div id="conversation">
+            <div id="answer">
                 <ul>
                     <li>Grandpy-Bot : Bonjour mon petit, cherches-tu des informations sur un endroit en particulier ?</li>
                 </ul>
             </div>
             <form>
-                <label for="question">Posez votre question à GrandPy-Bot :</label>
+                <label for="user_input">Posez votre question à GrandPy-Bot :</label>
                 <!-- A supprimer lors de l'ajout du css --> <br>
-                <textarea name="question" id="question" cols="30" rows="5"></textarea>
-                <button>Envoyer</button>
+                <textarea name="user_input" id="user_input" cols="30" rows="5"></textarea>
+                <!-- <button type="button" onclick="grandpyAnswer();">Envoyer</button> -->
+                <a href="javascript:grandpyAnswer();">Envoyer</a>
             </form>
         </section>
         
@@ -27,4 +29,6 @@
             Loïc TESSIER - <a href="https://github.com/loictessier/GrandPy-Bot">Github</a>
         </footer>
     </body>
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/grandpy.js') }}"></script>
 </html>

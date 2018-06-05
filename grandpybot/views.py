@@ -1,4 +1,5 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify, request
+from .grandpy import Grandpy
 
 app = Flask(__name__)
 
@@ -11,7 +12,7 @@ app.config.from_object('config')
 def index():
     return render_template('index.html')
 
-# une opération route pour chaque opération
-# @app.route('/grandpybot-answer')
-# def grandpybot_answer():
-#     pass
+@app.route('/grandpy', methods=['POST'])
+def grandpy_answer():
+    grandpy = Grandpy()
+    return jsonify({'answer': grandpy.grandpy_answer(request.form['user_raw_text'])})

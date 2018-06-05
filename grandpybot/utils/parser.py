@@ -25,7 +25,9 @@ class Parser:
         return self._words_filter(self._tokenize(sentence))
 
     def _tokenize(self, sentence):
-        '''Tokenize the sentences and return list of words'''
+        '''Tokenize the sentence and return list of words'''
+        if sentence is None:
+            sentence = ""
         sentence = "".join(c if c not in "'-" else " " for c in sentence)
         words = word_tokenize(sentence, language='french')
         return words

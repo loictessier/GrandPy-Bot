@@ -52,7 +52,7 @@ class Grandpy:
             as a question
         """
         for word in sentence.split():
-            if any(fuzz.ratio(word, term) >= 90 for term in INTERROGATION_TERMS):
+            if any(fuzz.ratio(word.lower(), term.lower()) >= 90 for term in INTERROGATION_TERMS):
                 return True
         return False
 
@@ -76,7 +76,7 @@ class Grandpy:
         answer = {}
         answer['address'] = address
         answer['extract'] = extract
-        return json.dumps(answer)
+        return answer
 
     def _get_address(self, keywords, countries):
         address = self._search_try(keywords[:])

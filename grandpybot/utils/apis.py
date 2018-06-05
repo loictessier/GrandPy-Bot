@@ -15,6 +15,7 @@ def search_address(*address_keywords):
     if response.ok:
         response.encoding = 'UTF-8'
         data = response.json()
+        print(data)
         if len(data["results"]) >= 1 :
             return data["results"][0]["formatted_address"]
     return None
