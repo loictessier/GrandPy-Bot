@@ -4,9 +4,8 @@ from ..constants import GOOGLE_SEARCH_URL, GOOGLE_API_KEY, WIKI_SEARCH_URL
 
 
 def search_address(*address_keywords):
-    """
-        Call google maps api with keywords and returns an address
-    """
+    '''Call google maps api with keywords and returns an address'''
+    # TODO return lat/long
     parameters = {
         "query": "+".join(*address_keywords),
         "key": GOOGLE_API_KEY
@@ -15,17 +14,17 @@ def search_address(*address_keywords):
     if response.ok:
         response.encoding = 'UTF-8'
         data = response.json()
-        print(data)
-        if len(data["results"]) >= 1 :
+        if data["status"] == 'ZERO_RESULTS' or len(data["results"]) < 1:
+            raise ZeroResultsException
+        else:
             return data["results"][0]["formatted_address"]
-    return None
+    else:
+        raise NoResponseException
 
 
-def search_mediawiki(location):
-    """
-        Call MediaWiki API with keyword and returns an extract
-    """
-    # get the id of the first result on the search based on location
+def search_mediawiki_page(location):
+    '''Call MediaWiki API with keyword and returns an page id'''
+    # TODO return id of wiki page to display a link
     search_id_parameters = {
         "action": "query",
         "list": "search",
@@ -37,17 +36,19 @@ def search_mediawiki(location):
     if response.ok:
         response.encoding = "UTF-8"
         data = response.json()
-        if len(data["query"]["search"]) >= 1 :
-            wiki_page_id = str(data["query"]["search"][0]["pageid"])
-        else:
-            return
+        try:
+            return str(data["query"]["search"][0]["pageid"])
+        except KeyError:
+            raise ZeroResultsException
     else:
-        return None
+        raise NoResponseException
 
-    # get an extract of the page corresponding to the id
+
+def get_media_wiki_extract(pageid):
+    '''get an extract of the page corresponding to the id'''
     get_extract_parameters = {
         "action": "query",
-        "pageids": wiki_page_id,
+        "pageids": pageid,
         "prop": "extracts",
         "explaintext": "true",
         "exsectionformat": "plain",
@@ -58,7 +59,20 @@ def search_mediawiki(location):
     if response.ok:
         response.encoding = "UTF-8"
         data = response.json()
-        return data["query"]["pages"][wiki_page_id]["extract"]
+        try:
+            extract = data["query"]["pages"][pageid]["extract"]
+        except KeyError:
+            raise ZeroResultsException
+        return extract
     else:
-        return None
+        raise NoResponseException
 
+
+class ZeroResultsException(Exception):
+    """Raised when the request returns zero values"""
+    pass
+
+
+class NoResponseException(Exception):
+    """Raised when there is no response for the api"""
+    pass
