@@ -80,14 +80,14 @@ class TestApis:
             return MockResponse({
                 "query": {
                     "pages": {
-                        5653202: {
+                        "5653202": {
                             "extract" : "My extract"
                         }
                     }
                 }
             })
         monkeypatch.setattr(requests, "get", mockreturn)
-        assert get_media_wiki_extract(5653202) is not None
+        assert get_media_wiki_extract("5653202") is not None
 
     def test_get_media_wiki_extract_zero(self, monkeypatch):
         def mockreturn(url, params):
@@ -101,5 +101,5 @@ class TestApis:
             return MockResponse({}, False)
         monkeypatch.setattr(requests, "get", mockreturn)
         with pytest.raises(NoResponseException):
-            get_media_wiki_extract(5653202)
+            get_media_wiki_extract("5653202")
 

@@ -1,7 +1,8 @@
 import requests
 
-from ..constants import GOOGLE_SEARCH_URL, GOOGLE_API_KEY, WIKI_SEARCH_URL
+from config import GOOGLE_SEARCH_URL, GOOGLE_API_KEY, WIKI_SEARCH_URL
 
+# TODO refactor apis calls into classes GOOGLEAPI // MEDIAWIKIAPI
 
 def search_address(*address_keywords):
     '''Call google maps api with keywords and returns an address'''
@@ -14,17 +15,16 @@ def search_address(*address_keywords):
     if response.ok:
         response.encoding = 'UTF-8'
         data = response.json()
-        if data["status"] == 'ZERO_RESULTS' or len(data["results"]) < 1:
+        try:    
+            return data["results"][0]
+        except:
             raise ZeroResultsException
-        else:
-            return data["results"][0]["formatted_address"]
     else:
         raise NoResponseException
 
 
 def search_mediawiki_page(location):
     '''Call MediaWiki API with keyword and returns an page id'''
-    # TODO return id of wiki page to display a link
     search_id_parameters = {
         "action": "query",
         "list": "search",

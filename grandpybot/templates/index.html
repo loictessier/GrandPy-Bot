@@ -3,24 +3,27 @@
     <head>
         <meta charset="UTF-8">
         <title>GrandPy-Bot</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/grandpy.css') }}">
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     </head>
     <body>
         <header>
-            GrandPy-Bot
+            <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
+                <h1>GrandPy-Bot</h1>
+            </nav>
         </header>
         
         <section>
-            <div id="answer">
+            <div id="chat">
                 <ul>
-                    <li>Grandpy-Bot : Bonjour mon petit, cherches-tu des informations sur un endroit en particulier ?</li>
+                    <li class="answer">Bonjour mon petit, cherches-tu des informations sur un endroit en particulier ?</li>
                 </ul>
             </div>
             <form>
                 <label for="user_input">Posez votre question à GrandPy-Bot :</label>
-                <!-- A supprimer lors de l'ajout du css --> <br>
+                <!-- TODO supprimer lors de l'ajout du css --> <br>
+                <!-- TODO remplacer text area par input text -->
                 <textarea name="user_input" id="user_input" cols="30" rows="5"></textarea>
-                <!-- <button type="button" onclick="grandpyAnswer();">Envoyer</button> -->
                 <a href="javascript:grandpyAnswer();">Envoyer</a>
             </form>
         </section>
@@ -31,4 +34,6 @@
     </body>
 
     <script type="text/javascript" src="{{ url_for('static', filename='js/grandpy.js') }}"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ config['GOOGLE_API_KEY'] }}&callback=initMap">
+</script>
 </html>
