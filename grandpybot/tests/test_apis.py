@@ -1,4 +1,5 @@
-from grandpybot.utils.apis import search_address, search_mediawiki_page, get_media_wiki_extract, ZeroResultsException, NoResponseException
+from grandpybot.utils.apis import search_address, search_mediawiki_page, \
+    get_media_wiki_extract, ZeroResultsException, NoResponseException
 import pytest
 
 import requests
@@ -20,13 +21,14 @@ class TestApis:
     def setup_method(self):
         self.address_keywords = ["adresse", "openclassrooms", "france"]
         self.location = "Cité Paradis"
-        
+
     def test_search_address_ok(self, monkeypatch):
         def mockreturn(url, params):
-            return MockResponse({ 
-                    "results": 
-                    [{ 
-                        "formatted_address": "7 Cité Paradis, 75010 Paris, France"
+            return MockResponse({
+                    "results":
+                    [{
+                        "formatted_address":
+                            "7 Cité Paradis, 75010 Paris, France"
                     }],
                     "status": "OK"
                 })
@@ -54,7 +56,7 @@ class TestApis:
             return MockResponse({
                 "query": {
                     "search": [
-                        { "pageid": 5653202 }
+                        {"pageid": 5653202}
                     ]
                 }
             })
@@ -63,7 +65,7 @@ class TestApis:
 
     def test_search_mediawiki_zero(self, monkeypatch):
         def mockreturn(url, params):
-            return MockResponse({ "query": {} })
+            return MockResponse({"query": {}})
         monkeypatch.setattr(requests, "get", mockreturn)
         with pytest.raises(ZeroResultsException):
             search_mediawiki_page("fake location")
@@ -81,7 +83,7 @@ class TestApis:
                 "query": {
                     "pages": {
                         "5653202": {
-                            "extract" : "My extract"
+                            "extract": "My extract"
                         }
                     }
                 }
@@ -91,7 +93,7 @@ class TestApis:
 
     def test_get_media_wiki_extract_zero(self, monkeypatch):
         def mockreturn(url, params):
-            return MockResponse({ "query": {} })
+            return MockResponse({"query": {}})
         monkeypatch.setattr(requests, "get", mockreturn)
         with pytest.raises(ZeroResultsException):
             get_media_wiki_extract(0)
@@ -102,4 +104,3 @@ class TestApis:
         monkeypatch.setattr(requests, "get", mockreturn)
         with pytest.raises(NoResponseException):
             get_media_wiki_extract("5653202")
-
