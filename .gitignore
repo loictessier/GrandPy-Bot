@@ -4,5 +4,5 @@
 *.code-workspace
 .vscode
 
-# project file
-constants.py
+# config file
+config.py
