@@ -1,0 +1,49 @@
+body {
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex-grow: 1;
+    overflow: scroll;
+    background-color: #050505;
+}
+
+section {
+    background-color: #1B9AAA;
+    height: 200px
+}
+
+footer {
+    height: 100px;
+    background-color: #DDDBCB;
+}
+
+header {
+    background-color: #1B9AAA;
+    margin: 0px 0px;
+    padding: 1.0em 0em;
+}
+
+ul, li {
+    width: 100%;
+    list-style:none;
+    padding:0;
+    margin:0;
+}
+
+.answer {
+    color: #F5F1E3;
+}
+
+.question {
+    text-align: right;
+    color: #FFFFFF;
+}
+
+.map {
+    height: 200px;  /* The height is 400 pixels */
+    width: 300px;  /* The width is the width of the web page */
+}
