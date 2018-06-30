@@ -7,16 +7,18 @@ function grandpyAnswer(){
         $("#chat ul").append('<li class="question">' + user_input.value + ' </li>');
         user_input.value = "";
 
-        // Send address
-        $("#chat ul").append('<li class="answer">' + response['answer']['address'] + ' </li>');
-        // Initialize and display the map
-        var mapId = Math.random().toString(36).substring(2, 15);
-        $("#chat ul").append('<div id="' + mapId + '" class="map answer"></div>');
-        initMap(
-            response['answer']['location']['lat'], 
-            response['answer']['location']['lng'],
-            mapId
-        );
+        if(response['answer']['address'] !== ""){
+            // Send address
+            $("#chat ul").append('<li class="answer">' + response['answer']['address'] + ' </li>');
+            // Initialize and display the map
+            var mapId = Math.random().toString(36).substring(2, 15);
+            $("#chat ul").append('<div id="' + mapId + '" class="map answer"></div>');
+            initMap(
+                response['answer']['location']['lat'], 
+                response['answer']['location']['lng'],
+                mapId
+            );
+        }
         // Send extract
         if(response['answer']['extract'] != "" && response['answer']['extract'] != null){
             $("#chat ul").append('<li class="answer">' + response['answer']['extract'] 

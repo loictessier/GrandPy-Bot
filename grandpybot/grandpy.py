@@ -45,7 +45,8 @@ class Grandpy:
         # Extract keywords from the question
         keywords = self.parser.get_keywords(question)
         # Search for an address based on the keywords
-        address = self._get_address(keywords, countries)
+        if keywords is not None:
+            address = self._get_address(keywords, countries)
         # If an address was found, search for informations about the location
         if address is not None and (
                 address not in GRANDPY_PRESET_ANSWER.values()):
@@ -53,12 +54,13 @@ class Grandpy:
             extract = self._get_extract(page_id)
             if page_id != "" and page_id is not None:
                 lien = "https://fr.wikipedia.org/wiki?curid=" + page_id
-        # return all informations found as a json object
-        return self._format_grandpy_answer(
-            address["formatted_address"],
-            extract,
-            lien,
-            address["geometry"]["location"])
+            # return all informations found as a json object
+            return self._format_grandpy_answer(
+                address["formatted_address"],
+                extract,
+                lien,
+                address["geometry"]["location"])
+        return self._format_grandpy_answer("", "", "", "")
 
     def _search_question(self, raw_text):
         """

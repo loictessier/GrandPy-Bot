@@ -28,13 +28,15 @@ class Parser:
     def _tokenize(self, sentence):
         '''Tokenize the sentence and return list of words'''
         if sentence is None:
-            sentence = ""
+            return None
         sentence = "".join(c if c not in "'-" else " " for c in sentence)
         words = word_tokenize(sentence, language='french')
         return words
 
     def _words_filter(self, words):
         '''filter a list of words by removing stop words'''
+        if words is None:
+            return None
         words_filtered = []
         for w in words:
             if w.lower() not in STOP_WORDS:
