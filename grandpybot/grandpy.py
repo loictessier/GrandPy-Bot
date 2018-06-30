@@ -1,18 +1,24 @@
 from .utils.parser import Parser
-from .utils.apis import search_address, search_mediawiki_page, get_media_wiki_extract
+from .utils.apis import search_address, search_mediawiki_page, \
+    get_media_wiki_extract
 from .utils.apis import ZeroResultsException, NoResponseException
 
 from fuzzywuzzy import fuzz
 import json
 
 
-INTERROGATION_TERMS = ["que", "où", "comment", "à", "quel", "quelle", "demander", "demandais"]
+INTERROGATION_TERMS = [
+    "que", "où", "comment", "à", "quel", "quelle", "demander", "demandais"]
 
 GRANDPY_PRESET_ANSWER = {
-    "tired_grandpy" : "Je suis fatigué, je répondrai à tes questions une autre fois !",
-    "ignorant_grandpy" : "Je ne me souviens pas d'un tel endroit.",
-    "tired_for_story_grandpy" : "Je suis trop fatigué pour te raconter une histoire sur cet endroit.",
-    "ingnorant_for_story_grandpa" : "Je n'ai pas d'histoire à raconter sur cet endroit."
+    "tired_grandpy":
+        "Je suis fatigué, je répondrai à tes questions une autre fois !",
+    "ignorant_grandpy":
+        "Je ne me souviens pas d'un tel endroit.",
+    "tired_for_story_grandpy":
+        "Je suis trop fatigué pour te raconter une histoire sur cet endroit.",
+    "ingnorant_for_story_grandpa":
+        "Je n'ai pas d'histoire à raconter sur cet endroit."
 }
 
 
@@ -41,7 +47,8 @@ class Grandpy:
         # Search for an address based on the keywords
         address = self._get_address(keywords, countries)
         # If an address was found, search for informations about the location
-        if address is not None and (address not in GRANDPY_PRESET_ANSWER.values()):
+        if address is not None and (
+                address not in GRANDPY_PRESET_ANSWER.values()):
             page_id = self._search_wiki_page(address["formatted_address"])
             extract = self._get_extract(page_id)
             if page_id != "" and page_id is not None:
@@ -69,7 +76,8 @@ class Grandpy:
             as a question
         """
         for word in sentence.split():
-            if any(fuzz.ratio(word.lower(), term.lower()) >= 90 for term in INTERROGATION_TERMS):
+            if any(fuzz.ratio(word.lower(), term.lower()) >= 90
+                    for term in INTERROGATION_TERMS):
                 return True
         return False
 
@@ -90,11 +98,17 @@ class Grandpy:
             address passed as parameter and return it
         """
         try:
-            media_wiki_result = get_media_wiki_extract(wiki_page_id).split("\n")[-1].strip()
+            media_wiki_result = (
+                get_media_wiki_extract(wiki_page_id).split("\n")[-1].strip()
+            )
         except ZeroResultsException:
-            media_wiki_result = GRANDPY_PRESET_ANSWER["ingnorant_for_story_grandpa"]
+            media_wiki_result = GRANDPY_PRESET_ANSWER[
+                "ingnorant_for_story_grandpa"
+            ]
         except NoResponseException:
-            media_wiki_result = GRANDPY_PRESET_ANSWER["tired_for_story_grandpy"]
+            media_wiki_result = GRANDPY_PRESET_ANSWER[
+                "tired_for_story_grandpy"
+            ]
         return media_wiki_result
 
     def _format_grandpy_answer(self, address, extract, lien, geo_location):
@@ -110,12 +124,12 @@ class Grandpy:
 
     def _get_address(self, keywords, countries):
         address = self._search_try(keywords[:])
-        if address != None:
+        if address is not None:
             return address
         for country in countries:
             keywords.append(country)
             address = self._search_try(keywords[:])
-            if address != None:
+            if address is not None:
                 continue
         if address is None:
             address = GRANDPY_PRESET_ANSWER["ignorant_grandpy"]
@@ -130,11 +144,7 @@ class Grandpy:
             except NoResponseException:
                 return GRANDPY_PRESET_ANSWER["tired_grandpy"]
 
-            if address != None or len(keywords) < 1:
+            if address is not None or len(keywords) < 1:
                 return address
             else:
                 keywords.pop(0)
-
-if __name__ == "__main__":
-    gp = Grandpy()
-    print(gp.grandpy_answer("Salut Grandpy, est-ce que tu connais l'adresse d'OpenClassrooms ?"))

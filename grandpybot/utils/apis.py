@@ -4,11 +4,12 @@ from config import GOOGLE_SEARCH_URL, GOOGLE_API_KEY, WIKI_SEARCH_URL
 
 # TODO refactor apis calls into classes GOOGLEAPI // MEDIAWIKIAPI
 
-def search_address(*address_keywords):
+
+def search_address(address_keywords):
     '''Call google maps api with keywords and returns an address'''
     # TODO return lat/long
     parameters = {
-        "query": "+".join(*address_keywords),
+        "query": "+".join(address_keywords),
         "key": GOOGLE_API_KEY
     }
     response = requests.get(GOOGLE_SEARCH_URL, params=parameters)
