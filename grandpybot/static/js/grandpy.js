@@ -18,12 +18,14 @@ function grandpyAnswer(){
                 response['answer']['location']['lng'],
                 mapId
             );
+        
         }
         // Send extract
         if(response['answer']['extract'] != "" && response['answer']['extract'] != null){
             $("#chat ul").append('<li class="answer">' + response['answer']['extract'] 
                 + ' [<a href='+ response['answer']['lien'] +'>En savoir plus sur Wikipedia</a>]</li>');
         }
+        $("#chat").scrollTop($('#chat').prop("scrollHeight"));
 
     }).fail(function() {
         $("#chat ul").append('<li class="answer">Grandpybot est fatigué, il répondra à tes questions une autre fois.</li>');
