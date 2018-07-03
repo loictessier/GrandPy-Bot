@@ -1,7 +1,7 @@
 from .utils.parser import Parser
-from .utils.apis import search_address, search_mediawiki_page, \
-    get_media_wiki_extract
-from .utils.apis import ZeroResultsException, NoResponseException
+from .utils.googleapi import GoogleApi
+from .utils.mediawikiapi import MediaWikiApi
+from .utils.exceptions import ZeroResultsException, NoResponseException
 
 from fuzzywuzzy import fuzz
 import json
@@ -87,7 +87,7 @@ class Grandpy:
         road = (address.split(',')[0]).split(' ')
         road_name = ' '.join([i for i in road if not i.isdigit()]).strip()
         try:
-            wiki_page_id = search_mediawiki_page(road_name)
+            wiki_page_id = MediaWikiApi.search(road_name)
         except ZeroResultsException:
             wiki_page_id = ""
         except NoResponseException:
@@ -101,7 +101,7 @@ class Grandpy:
         """
         try:
             media_wiki_result = (
-                get_media_wiki_extract(wiki_page_id).split("\n")[-1].strip()
+                MediaWikiApi.get_extract(wiki_page_id).split("\n")[-1].strip()
             )
         except ZeroResultsException:
             media_wiki_result = GRANDPY_PRESET_ANSWER[
@@ -140,7 +140,7 @@ class Grandpy:
     def _search_try(self, keywords):
         while True:
             try:
-                address = search_address(keywords)
+                address = GoogleApi.search(keywords)
             except ZeroResultsException:
                 address = None
             except NoResponseException:
