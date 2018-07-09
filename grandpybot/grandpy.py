@@ -17,8 +17,10 @@ GRANDPY_PRESET_ANSWER = {
         "Je ne me souviens pas d'un tel endroit.",
     "tired_for_story_grandpy":
         "Je suis trop fatigué pour te raconter une histoire sur cet endroit.",
-    "ingnorant_for_story_grandpa":
-        "Je n'ai pas d'histoire à raconter sur cet endroit."
+    "ignorant_for_story_grandpa":
+        "Je n'ai pas d'histoire à raconter sur cet endroit.",
+    "no_question_detected":
+        "Désolé, je n'ai pas compris la question."
 }
 
 
@@ -35,7 +37,8 @@ class Grandpy:
             Grandpy try to answer the user by looking for the question terms
             then finding the address corresponding and informations about it
         """
-        # ajouter lien page https://fr.wikipedia.org/wiki?curid=5653202
+        if user_raw_text == "":
+            return self._format_grandpy_answer("", "", "", "")
         countries = ["France"]
         address = None
         extract = None
@@ -47,6 +50,8 @@ class Grandpy:
         # Search for an address based on the keywords
         if keywords is not None:
             address = self._get_address(keywords, countries)
+        else:
+            address = GRANDPY_PRESET_ANSWER["no_question_detected"]
         # If an address was found, search for informations about the location
         if address is not None and (
                 address not in GRANDPY_PRESET_ANSWER.values()):
@@ -60,7 +65,9 @@ class Grandpy:
                 extract,
                 lien,
                 address["geometry"]["location"])
-        return self._format_grandpy_answer("", "", "", "")
+        if address is None:
+            address = GRANDPY_PRESET_ANSWER["ignorant_grandpy"]
+        return self._format_grandpy_answer(address, "", "", "")
 
     def _search_question(self, raw_text):
         """
@@ -105,7 +112,7 @@ class Grandpy:
             )
         except ZeroResultsException:
             media_wiki_result = GRANDPY_PRESET_ANSWER[
-                "ingnorant_for_story_grandpa"
+                "ignorant_for_story_grandpa"
             ]
         except NoResponseException:
             media_wiki_result = GRANDPY_PRESET_ANSWER[
