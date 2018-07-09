@@ -8,22 +8,27 @@ body {
 main {
     flex-grow: 1;
     overflow-y: scroll;
-    background-color: #050505;
+    background-color: #DDDBCB;
     padding: 0px 10px;
     display: flex;
 }
 
 section {
     background-color: #1B9AAA;
-    /* flex-shrink: 0; */
     padding: 10px 10px;
 }
 
 footer {
-    background-color: #DDDBCB;
+    background-color: #F5F1E3;
     height: 50px;
     flex-shrink: 0;
     padding: 0px 10px;
+    text-align: center;
+}
+
+footer img {
+    width: 30px;
+    height: auto;
 }
 
 header {
@@ -40,21 +45,58 @@ ul, li {
     margin:0;
 }
 
+.speech-bubble {
+	position: relative;
+    border-radius: .4em;
+    padding: 10px;
+    margin: 10px;
+    display: inline-block;
+}
+
+.speech-bubble:after {
+	content: '';
+	position: absolute;
+	top: 50%;
+	width: 0;
+	height: 0;
+	border: 5px solid transparent;
+	margin-top: -5px;
+}
+
 .answer {
-    color: #F5F1E3;
     width: 51%;
+}
+
+.answer>.speech-bubble {
+    background: #FFFFFF;
+}
+
+.answer>.speech-bubble::after {
+    border-right-color: #FFFFFF;
+    left: 0;
+    border-left: 0;
+	margin-left: -5px;
 }
 
 .question {
     text-align: right;
-    color: #FFFFFF;
-    width: 51%;
     margin-left: auto;
 }
 
+.question>.speech-bubble {
+    background: #60da25;
+}
+
+.question>.speech-bubble::after {
+    border-left-color: #60da25;
+    right: 0;
+    border-right: 0;
+	margin-right: -5px;
+}
+
 .map {
-    height: 200px;  /* The height is 400 pixels */
-    width: 300px;  /* The width is the width of the web page */
+    height: 200px;
+    width: 300px;
 }
 
 #user_input {

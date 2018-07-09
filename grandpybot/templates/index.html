@@ -16,24 +16,30 @@
         
         <main id="chat">
             <ul>
-                <li class="answer">Bonjour mon petit, cherches-tu des informations sur un endroit en particulier ?</li>
+                <li class="answer">
+                    <div class="speech-bubble">
+                        Bonjour mon petit, cherches-tu des informations sur un endroit en particulier ?
+                    </div>
+                </li>
             </ul>
         </main>
         <section>
-            <form>
-                <label for="user_input">Posez votre question à GrandPy-Bot :</label>
-                <!-- TODO supprimer lors de l'ajout du css --> <br>
+            <form onsubmit="grandpyAnswer();return false;">
+                <label for="user_input" class="lead">Posez votre question à GrandPy-Bot :</label>
+                <br>
                 <input type="text" name="user_input" id="user_input">
                 <a class="btn btn-dark" href="javascript:grandpyAnswer();">Envoyer</a>
             </form>
         </section>
         
-        <footer>
-            Loïc TESSIER - <a href="https://github.com/loictessier/GrandPy-Bot">Github</a>
+        <footer class="card-footer">
+            <a href="https://github.com/loictessier/GrandPy-Bot">
+                <img src="{{ url_for('static', filename='img/mark-github.png') }}" alt="Github">
+            </a>
         </footer>
     </body>
 
     <script type="text/javascript" src="{{ url_for('static', filename='js/grandpy.js') }}"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ config['GOOGLE_API_KEY'] }}&callback=initMap">
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ config['GOOGLE_API_KEY'] }}">
 </script>
 </html>
