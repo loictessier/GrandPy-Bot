@@ -31,7 +31,10 @@ class MediaWikiApi:
 
     @staticmethod
     def get_extract(page_id):
-        '''get an extract of the page corresponding to the id'''
+        '''
+            Call MediaWikiApi and get an extract of the page corresponding
+            to the id
+        '''
         get_extract_parameters = {
             "action": "query",
             "pageids": page_id,

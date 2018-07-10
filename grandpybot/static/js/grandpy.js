@@ -1,15 +1,18 @@
+
+// Called to display the answer of grandpy in the page application
 function grandpyAnswer(){
     var user_input = document.getElementById("user_input");
     var user_input_value = user_input.value;
     $("#chat ul").append('<li class="question"><div class="speech-bubble">' + user_input_value + '</div></li>');
     user_input.value = "";
+    $("#loading").show();
+    $("#chat").scrollTop($('#chat').prop("scrollHeight"));
     
-    // display a loading gif
     $.post('/grandpy', {
         user_raw_text: user_input_value,
 
     }).done(function(response){       
-        
+        $("#loading").hide();
         if(response['answer']['address'] !== ""){
             // Send address
             $("#chat ul").append('<li class="answer"><div class="speech-bubble">' + response['answer']['address'] + '</div></li>');
@@ -36,6 +39,7 @@ function grandpyAnswer(){
     });
 }
 
+// init function for the google map api
 function initMap(lat, lng, mapId){
     var location = {lat: lat, lng: lng};
     var map = new google.maps.Map(

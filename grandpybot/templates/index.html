@@ -11,6 +11,8 @@
         <header>
             <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
                 <h1>GrandPy-Bot</h1>
+                <img src="{{ url_for('static', filename='img/grandpy.png') }}" alt="grandpy">
+                <h4>Poses une question sur un lieu à GrandPy-Bot, il essaiera de t'indiquer l'adresse !</h4>
             </nav>
         </header>
         
@@ -18,14 +20,18 @@
             <ul>
                 <li class="answer">
                     <div class="speech-bubble">
-                        Bonjour mon petit, cherches-tu des informations sur un endroit en particulier ?
+                        Bonjour mon petit !
                     </div>
                 </li>
             </ul>
+            <div id="loading">
+                <img src="{{ url_for('static', filename='img/loading.gif') }}">
+            </div>
         </main>
+        
         <section>
             <form onsubmit="grandpyAnswer();return false;">
-                <label for="user_input" class="lead">Posez votre question à GrandPy-Bot :</label>
+                <label for="user_input" class="lead">Poses ta question à GrandPy-Bot :</label>
                 <br>
                 <input type="text" name="user_input" id="user_input">
                 <a class="btn btn-dark" href="javascript:grandpyAnswer();">Envoyer</a>
@@ -36,6 +42,9 @@
             <a href="https://github.com/loictessier/GrandPy-Bot">
                 <img src="{{ url_for('static', filename='img/mark-github.png') }}" alt="Github">
             </a>
+            <span class="italic">
+                Copyright © Loïc Tessier
+            </span>
         </footer>
     </body>
 

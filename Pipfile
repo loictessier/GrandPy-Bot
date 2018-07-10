@@ -10,8 +10,12 @@ flask-testing = "*"
 nltk = "*"
 requests = "*"
 fuzzywuzzy = "*"
+pycodestyle = "*"
 
 [dev-packages]
+pylint = "*"
+"pep8" = "*"
+pycodestyle = "*"
 
 [requires]
 python_version = "3.6"

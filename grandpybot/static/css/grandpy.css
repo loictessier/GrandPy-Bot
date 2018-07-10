@@ -38,6 +38,16 @@ header {
     padding: 0px 10px;
 }
 
+header img {
+    width: 50px;
+    height: auto;
+    margin: 0px 10px;
+}
+
+#mainNav {
+    justify-content: unset;
+}
+
 ul, li {
     width: 100%;
     list-style:none;
@@ -101,4 +111,8 @@ ul, li {
 
 #user_input {
     width: 50%;
+}
+
+#loading {
+    display: none;
 }

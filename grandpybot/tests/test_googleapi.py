@@ -2,7 +2,8 @@ import pytest
 import requests
 
 from grandpybot.utils.googleapi import GoogleApi
-from grandpybot.utils.exceptions import ZeroResultsException, NoResponseException
+from grandpybot.utils.exceptions import (ZeroResultsException,
+                                         NoResponseException)
 
 
 class MockResponse:
@@ -13,6 +14,7 @@ class MockResponse:
 
     def json(self):
         return self.result
+
 
 class TestGoogleApi:
     '''Testing the google api methods calls'''

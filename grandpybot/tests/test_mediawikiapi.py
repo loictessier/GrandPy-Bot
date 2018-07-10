@@ -2,7 +2,8 @@ import pytest
 import requests
 
 from grandpybot.utils.mediawikiapi import MediaWikiApi
-from grandpybot.utils.exceptions import ZeroResultsException, NoResponseException
+from grandpybot.utils.exceptions import (ZeroResultsException,
+                                         NoResponseException)
 
 
 class MockResponse:

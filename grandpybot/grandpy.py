@@ -26,7 +26,7 @@ GRANDPY_PRESET_ANSWER = {
 
 class Grandpy:
     """
-        GrandpyBot
+        The logic for the grandpy bot parsing and response construction
     """
 
     def __init__(self):
@@ -91,6 +91,10 @@ class Grandpy:
         return False
 
     def _search_wiki_page(self, address):
+        """
+            Call MediaWikiApi class search method to get informations
+            about the road name.
+        """
         road = (address.split(',')[0]).split(' ')
         road_name = ' '.join([i for i in road if not i.isdigit()]).strip()
         try:
@@ -132,6 +136,10 @@ class Grandpy:
         return answer
 
     def _get_address(self, keywords, countries):
+        """
+            Call search_try to get an address and
+            loop over keywords combination until he finds one
+        """
         address = self._search_try(keywords[:])
         if address is not None:
             return address
@@ -145,6 +153,9 @@ class Grandpy:
         return address
 
     def _search_try(self, keywords):
+        """
+            Try to get an adresse from a keywords combination
+        """
         while True:
             try:
                 address = GoogleApi.search(keywords)

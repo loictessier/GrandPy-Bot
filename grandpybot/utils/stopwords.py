@@ -8,7 +8,7 @@ STOP_WORDS = [
     "auxquels", "avaient", "avais", "avait", "avant", "avec", "avoir",
     "avons", "ayant", "b", "bah", "bas", "basee", "bat", "beau", "beaucoup",
     "bien", "bigre", "boum", "bravo", "brrr", "c", "car", "ce", "ceci",
-    "cela", "celle", "celle-ci", "celle-là", "celles", "celles-ci", 
+    "cela", "celle", "celle-ci", "celle-là", "celles", "celles-ci",
     "celles-là", "celui", "celui-ci", "celui-là", "cent", "cependant",
     "certain", "certaine", "certaines", "certains", "certes", "ces", "cet",
     "cette", "ceux", "ceux-ci", "ceux-là", "chacun", "chacune", "chaque",
@@ -83,4 +83,3 @@ STOP_WORDS = [
     "vous-mêmes", "vu", "vé", "vôtre", "vôtres", "w", "x", "y", "z", "zut",
     "à", "â", "ça", "ès", "étaient", "étais", "était", "étant", "été", "être",
     "ô",  "?",  ", ",  "!",  ".",  ";"]
-    
